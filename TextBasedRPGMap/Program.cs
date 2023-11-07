@@ -32,13 +32,18 @@ namespace TextBasedRPGMap
             DisplayBorderBottom(2);
             Console.WriteLine("DisplayMap(2)");
             DisplayLegend();
+            DisplayBorderTop(3);
+            DisplayMap(3);
+            DisplayBorderBottom(3);
+            Console.WriteLine("DisplayMap(3)");
+            DisplayLegend();
         }
         static void DisplayMap(int s)
         {
-            for (int x = 0; x < 12; x++)
+            for (int x = 0; x < map.GetLength(0); x++)
             {
                 Console.Write(borderVertical);
-                for (int y = 0; y < 30; y++)
+                for (int y = 0; y < map.GetLength(1); y++)
                 {
                     for(int z = 0; z < s; z++)
                     {
