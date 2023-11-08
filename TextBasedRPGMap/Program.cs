@@ -22,62 +22,59 @@ namespace TextBasedRPGMap
         static char mountain = Convert.ToChar(30);
         static void Main(string[] args)
         {
-            DisplayBorderTop(1);
             DisplayMap(1);
-            DisplayBorderBottom(1);
-            Console.WriteLine("DisplayMap(1)");
-            DisplayLegend();
-            DisplayBorderTop(2);
             DisplayMap(2);
-            DisplayBorderBottom(2);
-            Console.WriteLine("DisplayMap(2)");
-            DisplayLegend();
-            DisplayBorderTop(3);
             DisplayMap(3);
-            DisplayBorderBottom(3);
-            Console.WriteLine("DisplayMap(3)");
-            DisplayLegend();
         }
         static void DisplayMap(int s)
         {
+            DisplayBorderTop(s);
             for (int x = 0; x < map.GetLength(0); x++)
             {
-                Console.Write(borderVertical);
-                for (int y = 0; y < map.GetLength(1); y++)
+                
+                for (int p = 0; p < s; p++)
                 {
-                    for(int z = 0; z < s; z++)
+                    Console.Write(borderVertical);
+                    for (int y = 0; y < map.GetLength(1); y++)
                     {
-                        if (map[x, y] == '`')
+                        for (int z = 0; z < s; z++)
                         {
-                            ColorChange(ConsoleColor.Green, ConsoleColor.DarkGreen);
-                            Console.Write(grass);
-                        }
-                        else if (map[x, y] == '~')
-                        {
-                            ColorChange(ConsoleColor.DarkCyan, ConsoleColor.White);
-                            Console.Write(water);
-                        }
-                        else if (map[x, y] == '^')
-                        {
-                            ColorChange(ConsoleColor.DarkGray, ConsoleColor.Gray);
-                            Console.Write(mountain);
-                        }
-                        else if (map[x, y] == '*')
-                        {
-                            ColorChange(ConsoleColor.Green, ConsoleColor.DarkGreen);
-                            Console.Write(tree);
+                            if (map[x, y] == '`')
+                            {
+                                ColorChange(ConsoleColor.Green, ConsoleColor.DarkGreen);
+                                Console.Write(grass);
+                            }
+                            else if (map[x, y] == '~')
+                            {
+                                ColorChange(ConsoleColor.DarkCyan, ConsoleColor.White);
+                                Console.Write(water);
+                            }
+                            else if (map[x, y] == '^')
+                            {
+                                ColorChange(ConsoleColor.DarkGray, ConsoleColor.Gray);
+                                Console.Write(mountain);
+                            }
+                            else if (map[x, y] == '*')
+                            {
+                                ColorChange(ConsoleColor.Green, ConsoleColor.DarkGreen);
+                                Console.Write(tree);
+                            }
                         }
                     }
+                    ColorChange(ConsoleColor.Black, ConsoleColor.White);
+                    Console.Write(borderVertical);
+                    Console.Write("\n");
                 }
-                ColorChange(ConsoleColor.Black, ConsoleColor.White);
-                Console.Write(borderVertical);
-                Console.Write("\n");
+                
             }
+            DisplayBorderBottom(s);
+            Console.WriteLine("DisplayMap(" + s + ")");
+            DisplayLegend();
         }
         static void DisplayBorderTop(int s)
         {
             Console.Write(borderTL);
-            for (int i = 0; i < 30*s; i++)
+            for (int i = 0; i < map.GetLength(1)*s; i++)
             {
                 Console.Write(borderHorizontal);
             }
@@ -88,7 +85,7 @@ namespace TextBasedRPGMap
         static void DisplayBorderBottom(int s)
         {
             Console.Write(borderBL);
-            for (int i = 0; i < 30 * s; i++)
+            for (int i = 0; i < map.GetLength(1) * s; i++)
             {
                 Console.Write(borderHorizontal);
             }
@@ -98,11 +95,12 @@ namespace TextBasedRPGMap
         }
         static void DisplayLegend()
         {
+
             Console.Write("\nLegend:\nGrass: ");
             ColorChange(ConsoleColor.Green, ConsoleColor.DarkGreen);
             Console.Write(grass);
             ColorChange(ConsoleColor.Black, ConsoleColor.White);
-            Console.Write("\nWater: ");
+            Console.Write(" \nWater: ");
             ColorChange(ConsoleColor.DarkCyan, ConsoleColor.White);
             Console.Write(water);
             ColorChange(ConsoleColor.Black, ConsoleColor.White);
