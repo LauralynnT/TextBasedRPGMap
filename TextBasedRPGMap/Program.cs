@@ -10,7 +10,7 @@ namespace TextBasedRPGMap
     internal class Program
     {
         static Encoding asciiEncoder = Encoding.GetEncoding("IBM437");
-        static string water = ($"{asciiEncoder.GetString(new byte[1] { 176 })}");
+        static string mountain = ($"{asciiEncoder.GetString(new byte[1] { 176 })}");
         static string grass = ($"{asciiEncoder.GetString(new byte[1] { 177 })}");
         static string tree = ($"{asciiEncoder.GetString(new byte[1] { 178 })}");
         static string borderHorizontal = ($"{asciiEncoder.GetString(new byte[1] { 205 })}");
@@ -19,7 +19,9 @@ namespace TextBasedRPGMap
         static string borderTR = ($"{asciiEncoder.GetString(new byte[1] { 184 })}");
         static string borderBL = ($"{asciiEncoder.GetString(new byte[1] { 212 })}");
         static string borderBR = ($"{asciiEncoder.GetString(new byte[1] { 189 })}");
-        static char mountain = Convert.ToChar(30);
+        static char water = Convert.ToChar(30);
+        static char door = Convert.ToChar(29);
+        static char floor = Convert.ToChar(31);
         static void Main(string[] args)
         {
             DisplayMap(1);
@@ -41,23 +43,33 @@ namespace TextBasedRPGMap
                         {
                             if (map[x, y] == '`')
                             {
-                                ColorChange(ConsoleColor.Green, ConsoleColor.DarkGreen);
+                                ColorChange(ConsoleColor.DarkGray, ConsoleColor.Black);
                                 Console.Write(grass);
                             }
                             else if (map[x, y] == '~')
                             {
-                                ColorChange(ConsoleColor.DarkCyan, ConsoleColor.White);
+                                ColorChange(ConsoleColor.Red, ConsoleColor.DarkYellow);
                                 Console.Write(water);
                             }
                             else if (map[x, y] == '^')
                             {
-                                ColorChange(ConsoleColor.DarkGray, ConsoleColor.Gray);
+                                ColorChange(ConsoleColor.DarkGray, ConsoleColor.DarkGreen);
                                 Console.Write(mountain);
                             }
                             else if (map[x, y] == '*')
                             {
-                                ColorChange(ConsoleColor.Green, ConsoleColor.DarkGreen);
+                                ColorChange(ConsoleColor.DarkRed, ConsoleColor.Red);
                                 Console.Write(tree);
+                            }
+                            else if (map[x, y] == '!')
+                            {
+                                ColorChange(ConsoleColor.White, ConsoleColor.Gray);
+                                Console.Write(door);
+                            }
+                            else if (map[x, y] == '#')
+                            {
+                                ColorChange(ConsoleColor.DarkYellow, ConsoleColor.DarkGray);
+                                Console.Write(floor);
                             }
                         }
                     }
@@ -100,7 +112,7 @@ namespace TextBasedRPGMap
             ColorChange(ConsoleColor.Green, ConsoleColor.DarkGreen);
             Console.Write(grass);
             ColorChange(ConsoleColor.Black, ConsoleColor.White);
-            Console.Write(" \nWater: ");
+            Console.Write("\nWater: ");
             ColorChange(ConsoleColor.DarkCyan, ConsoleColor.White);
             Console.Write(water);
             ColorChange(ConsoleColor.Black, ConsoleColor.White);
@@ -116,18 +128,18 @@ namespace TextBasedRPGMap
         }
         static char[,] map = new char[,] // dimensions defined by following data:
     {
-        {'^','^','^','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
-        {'^','^','`','`','`','`','*','*','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','~','~','~','`','`','`'},
-        {'^','^','`','`','`','*','*','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','~','~','~','`','`','`','`','`'},
-        {'^','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
-        {'`','`','`','`','~','~','~','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
-        {'`','`','`','`','~','~','~','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
-        {'`','`','`','~','~','~','~','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','^','^','`','`','`','`','`','`'},
-        {'`','`','`','`','`','~','~','~','`','`','`','`','`','`','`','`','`','`','`','`','`','^','^','^','^','`','`','`','`','`'},
-        {'`','`','`','`','`','~','~','~','~','`','`','`','`','`','`','`','`','`','`','`','`','`','`','^','^','^','^','`','`','`'},
-        {'`','`','`','`','`','`','`','~','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
-        {'`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
-        {'`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`','`'},
+        {'^','^','^','^','~','^','^','~','^','^','*','*','^','^','!','!','^','^','`','`','`','`','`','^','^','#','#','#','#','^'},
+        {'*','*','*','*','~','^','^','~','*','*','^','^','^','^','#','#','#','#','^','`','`','`','`','^','^','^','^','!','!','^'},
+        {'^','^','^','^','~','^','^','~','^','^','#','#','#','#','#','#','#','^','~','`','^','`','`','`','`','`','`','`','`','`'},
+        {'!','#','#','#','#','#','#','#','#','#','^','^','~','^','^','#','#','^','~','`','^','^','`','`','`','^','^','`','`','`'},
+        {'^','^','~','^','^','#','#','#','#','#','^','^','~','*','^','^','#','!','`','`','`','`','`','`','`','`','`','`','`','`'},
+        {'^','^','~','^','^','#','#','#','#','^','^','^','~','*','*','^','^','^','`','`','`','`','^','^','^','`','`','`','`','`'},
+        {'!','#','#','#','#','#','#','^','^','#','#','#','#','#','#','#','#','!','`','`','`','`','`','`','`','^','^','^','!','!'},
+        {'^','^','^','^','^','#','#','^','^','#','#','^','~','^','!','!','^','~','`','`','`','`','`','`','^','^','^','#','#','#'},
+        {'#','#','^','^','#','#','#','#','!','#','#','^','~','^','#','#','#','~','^','`','`','`','`','`','`','!','#','#','#','#'},
+        {'#','#','!','#','#','#','#','#','~','^','#','#','#','^','^','!','!','^','`','`','^','`','`','`','`','^','*','~','^','#'},
+        {'^','^','^','#','#','#','#','^','~','^','^','#','#','#','!','`','`','`','`','^','^','`','`','^','^','^','*','~','^','^'},
+        {'^','^','^','!','!','^','^','^','~','*','^','#','#','#','^','^','^','`','`','`','`','`','`','`','^','^','^','~','*','^'},
     };
         static void ColorChange(ConsoleColor background, ConsoleColor foreground)
         {
@@ -135,9 +147,11 @@ namespace TextBasedRPGMap
             Console.ForegroundColor = foreground;
         }
         // map legend:
-        // ^ = mountain
-        // ` = grass
-        // ~ = water
-        // * = trees
+        // ^ = wall
+        // ` = ground
+        // ~ = lava
+        // * = magma
+        // ! = door
+        // # = floor
     }
 }
