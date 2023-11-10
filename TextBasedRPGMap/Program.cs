@@ -10,18 +10,18 @@ namespace TextBasedRPGMap
     internal class Program
     {
         static Encoding asciiEncoder = Encoding.GetEncoding("IBM437");
-        static string mountain = ($"{asciiEncoder.GetString(new byte[1] { 176 })}");
-        static string grass = ($"{asciiEncoder.GetString(new byte[1] { 177 })}");
-        static string tree = ($"{asciiEncoder.GetString(new byte[1] { 178 })}");
+        static string wall = ($"{asciiEncoder.GetString(new byte[1] { 177 })}");
+        static string ground = ($"{asciiEncoder.GetString(new byte[1] { 177 })}");
+        static string floor = ($"{asciiEncoder.GetString(new byte[1] { 178 })}");
         static string borderHorizontal = ($"{asciiEncoder.GetString(new byte[1] { 205 })}");
         static string borderVertical = ($"{asciiEncoder.GetString(new byte[1] { 186 })}");
         static string borderTL = ($"{asciiEncoder.GetString(new byte[1] { 214 })}");
         static string borderTR = ($"{asciiEncoder.GetString(new byte[1] { 184 })}");
         static string borderBL = ($"{asciiEncoder.GetString(new byte[1] { 212 })}");
         static string borderBR = ($"{asciiEncoder.GetString(new byte[1] { 189 })}");
-        static char water = Convert.ToChar(30);
-        static char door = Convert.ToChar(29);
-        static char floor = Convert.ToChar(31);
+        static string lava = ($"{asciiEncoder.GetString(new byte[1] { 176 })}");
+        static char doorH = Convert.ToChar(29);
+        static char doorV = Convert.ToChar(18);
         static void Main(string[] args)
         {
             DisplayMap(1);
@@ -44,27 +44,32 @@ namespace TextBasedRPGMap
                             if (map[x, y] == '`')
                             {
                                 ColorChange(ConsoleColor.DarkGray, ConsoleColor.Black);
-                                Console.Write(grass);
+                                Console.Write(ground);
                             }
                             else if (map[x, y] == '~')
                             {
                                 ColorChange(ConsoleColor.Red, ConsoleColor.DarkYellow);
-                                Console.Write(water);
+                                Console.Write(lava);
                             }
                             else if (map[x, y] == '^')
                             {
                                 ColorChange(ConsoleColor.DarkGray, ConsoleColor.DarkGreen);
-                                Console.Write(mountain);
+                                Console.Write(wall);
                             }
                             else if (map[x, y] == '*')
                             {
                                 ColorChange(ConsoleColor.DarkRed, ConsoleColor.Red);
-                                Console.Write(tree);
+                                Console.Write(lava);
                             }
                             else if (map[x, y] == '!')
                             {
-                                ColorChange(ConsoleColor.White, ConsoleColor.Gray);
-                                Console.Write(door);
+                                ColorChange(ConsoleColor.DarkGray, ConsoleColor.Gray);
+                                Console.Write(doorH);
+                            }
+                            else if (map[x, y] == '?')
+                            {
+                                ColorChange(ConsoleColor.DarkGray, ConsoleColor.Gray);
+                                Console.Write(doorV);
                             }
                             else if (map[x, y] == '#')
                             {
@@ -108,21 +113,28 @@ namespace TextBasedRPGMap
         static void DisplayLegend()
         {
 
-            Console.Write("\nLegend:\nGrass: ");
-            ColorChange(ConsoleColor.Green, ConsoleColor.DarkGreen);
-            Console.Write(grass);
+            Console.Write("\nLegend:\nGround: ");
+            ColorChange(ConsoleColor.DarkGray, ConsoleColor.Black);
+            Console.Write(ground);
             ColorChange(ConsoleColor.Black, ConsoleColor.White);
-            Console.Write("\nWater: ");
-            ColorChange(ConsoleColor.DarkCyan, ConsoleColor.White);
-            Console.Write(water);
+            Console.Write("\nLava: ");
+            ColorChange(ConsoleColor.Red, ConsoleColor.DarkYellow);
+            Console.Write(lava);
+            ColorChange(ConsoleColor.DarkRed, ConsoleColor.DarkYellow);
+            Console.Write(lava);
             ColorChange(ConsoleColor.Black, ConsoleColor.White);
-            Console.Write("\nMountain: ");
+            Console.Write("\nWall: ");
+            ColorChange(ConsoleColor.DarkGray, ConsoleColor.DarkGreen);
+            Console.Write(wall);
+            ColorChange(ConsoleColor.Black, ConsoleColor.White);
+            Console.Write("\nFloor: ");
+            ColorChange(ConsoleColor.DarkYellow, ConsoleColor.DarkGray);
+            Console.Write(floor);
+            ColorChange(ConsoleColor.Black, ConsoleColor.White);
+            Console.Write("\nDoor: ");
             ColorChange(ConsoleColor.DarkGray, ConsoleColor.Gray);
-            Console.Write(mountain);
-            ColorChange(ConsoleColor.Black, ConsoleColor.White);
-            Console.Write("\nTree: ");
-            ColorChange(ConsoleColor.Green, ConsoleColor.DarkGreen);
-            Console.Write(tree);
+            Console.Write(doorV);
+            Console.Write(doorH);
             ColorChange(ConsoleColor.Black, ConsoleColor.White);
             Console.WriteLine();
         }
@@ -131,14 +143,14 @@ namespace TextBasedRPGMap
         {'^','^','^','^','~','^','^','~','^','^','*','*','^','^','!','!','^','^','`','`','`','`','`','^','^','#','#','#','#','^'},
         {'*','*','*','*','~','^','^','~','*','*','^','^','^','^','#','#','#','#','^','`','`','`','`','^','^','^','^','!','!','^'},
         {'^','^','^','^','~','^','^','~','^','^','#','#','#','#','#','#','#','^','~','`','^','`','`','`','`','`','`','`','`','`'},
-        {'!','#','#','#','#','#','#','#','#','#','^','^','~','^','^','#','#','^','~','`','^','^','`','`','`','^','^','`','`','`'},
-        {'^','^','~','^','^','#','#','#','#','#','^','^','~','*','^','^','#','!','`','`','`','`','`','`','`','`','`','`','`','`'},
+        {'?','#','#','#','#','#','#','#','#','#','^','^','~','^','^','#','#','^','~','`','^','^','`','`','`','^','^','`','`','`'},
+        {'^','^','~','^','^','#','#','#','#','#','^','^','~','*','^','^','#','?','`','`','`','`','`','`','`','`','`','`','`','`'},
         {'^','^','~','^','^','#','#','#','#','^','^','^','~','*','*','^','^','^','`','`','`','`','^','^','^','`','`','`','`','`'},
-        {'!','#','#','#','#','#','#','^','^','#','#','#','#','#','#','#','#','!','`','`','`','`','`','`','`','^','^','^','!','!'},
+        {'?','#','#','#','#','#','#','^','^','#','#','#','#','#','#','#','#','?','`','`','`','`','`','`','`','^','^','^','!','!'},
         {'^','^','^','^','^','#','#','^','^','#','#','^','~','^','!','!','^','~','`','`','`','`','`','`','^','^','^','#','#','#'},
-        {'#','#','^','^','#','#','#','#','!','#','#','^','~','^','#','#','#','~','^','`','`','`','`','`','`','!','#','#','#','#'},
-        {'#','#','!','#','#','#','#','#','~','^','#','#','#','^','^','!','!','^','`','`','^','`','`','`','`','^','*','~','^','#'},
-        {'^','^','^','#','#','#','#','^','~','^','^','#','#','#','!','`','`','`','`','^','^','`','`','^','^','^','*','~','^','^'},
+        {'#','#','^','^','#','#','#','#','?','#','#','^','~','^','#','#','#','~','^','`','`','`','`','`','`','?','#','#','#','#'},
+        {'#','#','?','#','#','#','#','#','~','^','#','#','#','^','^','!','!','^','`','`','^','`','`','`','`','^','*','~','^','#'},
+        {'^','^','^','#','#','#','#','^','~','^','^','#','#','#','?','`','`','`','`','^','^','`','`','^','^','^','*','~','^','^'},
         {'^','^','^','!','!','^','^','^','~','*','^','#','#','#','^','^','^','`','`','`','`','`','`','`','^','^','^','~','*','^'},
     };
         static void ColorChange(ConsoleColor background, ConsoleColor foreground)
