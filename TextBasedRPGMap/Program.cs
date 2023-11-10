@@ -27,6 +27,7 @@ namespace TextBasedRPGMap
             DisplayMap(1);
             DisplayMap(2);
             DisplayMap(3);
+            Console.ReadKey(true);
         }
         static void DisplayMap(int s)
         {
@@ -117,21 +118,21 @@ namespace TextBasedRPGMap
             ColorChange(ConsoleColor.DarkGray, ConsoleColor.Black);
             Console.Write(ground);
             ColorChange(ConsoleColor.Black, ConsoleColor.White);
-            Console.Write("\nLava: ");
+            Console.Write("\nLava:  ");
             ColorChange(ConsoleColor.Red, ConsoleColor.DarkYellow);
             Console.Write(lava);
             ColorChange(ConsoleColor.DarkRed, ConsoleColor.DarkYellow);
             Console.Write(lava);
             ColorChange(ConsoleColor.Black, ConsoleColor.White);
-            Console.Write("\nWall: ");
+            Console.Write("\nWall:   ");
             ColorChange(ConsoleColor.DarkGray, ConsoleColor.DarkGreen);
             Console.Write(wall);
             ColorChange(ConsoleColor.Black, ConsoleColor.White);
-            Console.Write("\nFloor: ");
+            Console.Write("\nFloor:  ");
             ColorChange(ConsoleColor.DarkYellow, ConsoleColor.DarkGray);
             Console.Write(floor);
             ColorChange(ConsoleColor.Black, ConsoleColor.White);
-            Console.Write("\nDoor: ");
+            Console.Write("\nDoor:  ");
             ColorChange(ConsoleColor.DarkGray, ConsoleColor.Gray);
             Console.Write(doorV);
             Console.Write(doorH);
